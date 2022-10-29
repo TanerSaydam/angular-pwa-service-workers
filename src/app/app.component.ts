@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'pwa-service-workers';
+  
+  todos: any[] = [];
+  constructor(
+    private _http: HttpClient
+  ){}
+
+  get(){
+    let api = "https://jsonplaceholder.typicode.com/todos";
+    this._http.get<any>(api).subscribe({
+      next: (res)=> {
+        this.todos = res;
+      }
+    })
+  }
+
+  clear(){
+    this.todos = []
+  }
+
 }
